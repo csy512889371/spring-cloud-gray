@@ -1,5 +1,6 @@
 package cn.springcloud.gray.server.module.gray.jpa;
 
+import cn.springcloud.gray.model.GrayInstanceAlias;
 import cn.springcloud.gray.model.GrayStatus;
 import cn.springcloud.gray.model.InstanceInfo;
 import cn.springcloud.gray.model.InstanceStatus;
@@ -116,15 +117,19 @@ public class JPAGrayServerModule implements GrayServerModule {
             grayServiceService.saveModel(grayService);
             serviceManageModule.insertServiceOwner(grayService.getServiceId());
         }
+
+        GrayInstance oldRecord = grayInstanceService.findOneModel(instance.getInstanceId());
         if (Objects.isNull(instance.getInstanceStatus()) && !Objects.isNull(serviceDiscovery)) {
             InstanceInfo instanceInfo =
                     serviceDiscovery.getInstanceInfo(instance.getServiceId(), instance.getInstanceId());
-            if (!Objects.isNull(instanceInfo)) {
+            if (Objects.nonNull(instanceInfo)) {
                 instance.setInstanceStatus(instanceInfo.getInstanceStatus());
+                if (Objects.isNull(oldRecord) && Objects.nonNull(instanceInfo.getAliases()) && instanceInfo.getAliases().length > 0) {
+                    instance.setAliases(instanceInfo.getAliases());
+                }
             }
         }
 
-        GrayInstance oldRecord = grayInstanceService.findOneModel(instance.getInstanceId());
         GrayInstance newRecord = grayInstanceService.saveModel(instance);
         if (isLockGray(newRecord) ||
                 grayServerProperties.getInstance().getNormalInstanceStatus().contains(instance.getInstanceStatus())) {
@@ -315,6 +320,17 @@ public class JPAGrayServerModule implements GrayServerModule {
                 .contains(instance.getInstanceStatus());
         if (!isNormalInstanceStatus) {
             triggerEvent(TriggerType.MODIFY, instance);
+        }
+    }
+
+    @Override
+    public void updateInstanceAliases(GrayInstanceAlias grayInstanceAlias, String currentUserId) {
+        GrayInstance grayInstance = grayInstanceService.findOneModel(grayInstanceAlias.getInstanceId());
+        grayInstance.setAliases(grayInstanceAlias.getAliases());
+        grayInstance.setOperator(currentUserId);
+        grayInstanceService.saveModel(grayInstance);
+        if (isActiveGrayInstance(grayInstance)) {
+            triggerUpdateEvent(grayInstanceAlias);
         }
     }
 }
