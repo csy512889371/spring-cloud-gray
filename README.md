@@ -2,10 +2,10 @@
 
 
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
-[![A Release](https://img.shields.io/badge/release-A.2.0.0%20RC2-blue)](https://github.com/SpringCloud/spring-cloud-gray/releases/tag/A.2.0.0-RC2)
-[![B Release](https://img.shields.io/badge/release-B.1.0.0%20RC2-blue)](https://github.com/SpringCloud/spring-cloud-gray/releases/tag/B.1.0.0-RC2)
-[![B Release](https://img.shields.io/badge/release-C.1.0.0%20RC2-blue)](https://github.com/SpringCloud/spring-cloud-gray/releases/tag/C.1.0.0-RC2)
-[![B Release](https://img.shields.io/badge/release-D.0.0.1%20RC1-blue)](https://github.com/SpringCloud/spring-cloud-gray/releases/tag/D.0.0.1-RC1)
+[![A Release](https://img.shields.io/badge/release-A.2.0.0-blue)](https://github.com/SpringCloud/spring-cloud-gray/releases/tag/A.2.0.0)
+[![B Release](https://img.shields.io/badge/release-B.1.0.0-blue)](https://github.com/SpringCloud/spring-cloud-gray/releases/tag/B.1.0.0)
+[![B Release](https://img.shields.io/badge/release-C.1.0.0-blue)](https://github.com/SpringCloud/spring-cloud-gray/releases/tag/C.1.0.0)
+[![B Release](https://img.shields.io/badge/release-D.0.0.1-blue)](https://github.com/SpringCloud/spring-cloud-gray/releases/tag/D.0.0.1)
 
 ## 介绍
 Spring Cloud Gray 是一套开源的微服务灰度路由解决方案，它由spring-cloud-gray-client，spring-cloud-gray-client-netflix 和 spring-cloud-tray-server，spring-cloud-gray-webui组成。<br/>
@@ -37,10 +37,10 @@ insert into `user` ( `user_id`, `account`, `name`, `password`, `roles`, `status`
 ## 版本信息
 项目分支 | 项目版本 | srpingcloud版本 | springboot版本
 --- | --- | --- | ---
-A | A.2.0.0-RC2 | Edgware | 1.5.*
-B | B.1.0.0-RC2 | Finchley | 2.0.*
-C | C.1.0.0-RC2 | Greenwich | 2.1.*
-D | D.0.0.1-RC1 | Hoxton | 2.3.*
+A | A.2.0.0 | Edgware | 1.5.*
+B | B.1.0.0 | Finchley | 2.0.*
+C | C.1.0.0 | Greenwich | 2.1.*
+D | D.0.0.1 | Hoxton | 2.3.*
 
 
 ## Spring Cloud Gray 能做什么
@@ -222,7 +222,7 @@ FlowRateGray | FlowRateGrayDecisionFactory | 按百分比放量进行判断
 ``` java
 import cn.springcloud.gray.decision.GrayDecision;
 import cn.springcloud.gray.decision.factory.AbstractGrayDecisionFactory;
-import cn.springcloud.gray.request.GrayHttpTrackInfo;
+import cn.springcloud.gray.request.GrayTrackInfo;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
@@ -238,7 +238,7 @@ public class VersionGrayDecisionFactory extends AbstractGrayDecisionFactory<Vers
     @Override
     public GrayDecision apply(Config configBean) {
         return args -> {
-            GrayHttpTrackInfo grayRequest = (GrayHttpTrackInfo) args.getGrayRequest().getGrayTrackInfo();
+            GrayTrackInfo grayRequest = args.getGrayRequest().getGrayTrackInfo();
            int version = StringUtils.defaultIfNull(grayRequest.getAttribute(USER_ID_PARAM_NAME), "0");
             if(StringUtils.equal(configBean.getCompareMode(), "LT")){
                 return configBean.getVersion() > version;
@@ -275,7 +275,7 @@ HttpURI | HttpURIGrayInfoTracker | 获取http请求的URI并记录到灰度追�
 ### 自定义灰度追踪实现
 如果上面这些决策还不能满足需求，那么可以扩展`cn.springcloud.gray.request.GrayInfoTracker`，实现自定义的逻辑，发布到spring 容器中即可。如:
 ``` java
-import cn.springcloud.gray.request.GrayHttpTrackInfo;
+import cn.springcloud.gray.request.GrayTrackInfo;
 import cn.springcloud.gray.request.TrackArgs;
 import cn.springcloud.gray.web.tracker.HttpGrayInfoTracker;
 import lombok.extern.slf4j.Slf4j;
@@ -291,7 +291,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UserIdGrayInfoTracker implements HttpGrayInfoTracker {
 
     @Override
-    public void call(TrackArgs<GrayHttpTrackInfo, HttpServletRequest> args) {
+    public void call(TrackArgs<GrayTrackInfo, HttpServletRequest> args) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         String userId = null;

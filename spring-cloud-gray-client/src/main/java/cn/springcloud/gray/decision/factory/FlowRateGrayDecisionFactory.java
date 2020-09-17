@@ -2,7 +2,7 @@ package cn.springcloud.gray.decision.factory;
 
 import cn.springcloud.gray.decision.GrayDecision;
 import cn.springcloud.gray.request.GrayHttpRequest;
-import cn.springcloud.gray.request.GrayHttpTrackInfo;
+import cn.springcloud.gray.request.GrayTrackInfo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,7 +16,7 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 
 /**
- * 按(value(type,feild)+salt)%100， &lt; rate的将放量。
+ * 按(value(type,feild)+salt).hashcode % 100， &lt; rate的将放量。
  * 从以上的逻辑中实现按百分比灰度放量.
  */
 @Slf4j
@@ -66,18 +66,18 @@ public class FlowRateGrayDecisionFactory extends AbstractGrayDecisionFactory<Flo
 
         fieldValueGetters.put(FIELD_SCOPE_HTTP_TRACK_HEADER,
                 (grayReq, field) -> {
-                    GrayHttpTrackInfo grayHttpTrackInfo = ((GrayHttpTrackInfo) grayReq.getGrayTrackInfo());
-                    if (!Objects.isNull(grayHttpTrackInfo)) {
-                        return joinString(grayHttpTrackInfo.getHeader(field));
+                    GrayTrackInfo grayTrackInfo = grayReq.getGrayTrackInfo();
+                    if (!Objects.isNull(grayTrackInfo)) {
+                        return joinString(grayTrackInfo.getHeader(field));
                     }
                     return null;
                 });
 
         fieldValueGetters.put(FIELD_SCOPE_HTTP_TRACK_PARAMETER,
                 (grayReq, field) -> {
-                    GrayHttpTrackInfo grayHttpTrackInfo = ((GrayHttpTrackInfo) grayReq.getGrayTrackInfo());
-                    if (!Objects.isNull(grayHttpTrackInfo)) {
-                        return joinString(grayHttpTrackInfo.getParameter(field));
+                    GrayTrackInfo grayTrackInfo = grayReq.getGrayTrackInfo();
+                    if (!Objects.isNull(grayTrackInfo)) {
+                        return joinString(grayTrackInfo.getParameter(field));
                     }
                     return null;
                 });

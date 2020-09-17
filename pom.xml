@@ -12,7 +12,7 @@
     <groupId>cn.springcloud.gray</groupId>
     <artifactId>spring-cloud-gray</artifactId>
     <packaging>pom</packaging>
-    <version>D.0.1.0-SNAPSHOT</version>
+    <version>${revision}</version>
     <url>https://github.com/SpringCloud/spring-cloud-gray</url>
     <organization>
         <name>Spring Cloud中国社区</name>
@@ -63,6 +63,8 @@
 
 
     <properties>
+        <!-- Project revision -->
+        <revision>D.0.1.0-Beta-1</revision>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <java.version>1.8</java.version>
@@ -73,10 +75,11 @@
 
         <!-- Alibaba Cloud -->
         <spring-cloud-alibaba-dependencies.version>2.2.1.RELEASE</spring-cloud-alibaba-dependencies.version>
-
         <!-- Apache Dubbo -->
         <dubbo.version>2.7.8</dubbo.version>
         <curator.version>4.0.1</curator.version>
+        <!-- Alibaba Nacos -->
+        <nacos.version>1.2.1</nacos.version>
 
 
         <springfox.version>2.9.2</springfox.version>
@@ -167,6 +170,11 @@
             <dependency>
                 <groupId>cn.springcloud.gray</groupId>
                 <artifactId>spring-cloud-gray-client-netflix</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.springcloud.gray</groupId>
+                <artifactId>spring-cloud-gray-plugin-dubbo</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -483,6 +491,21 @@
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo</artifactId>
                 <version>${dubbo.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-common</artifactId>
+                <version>${dubbo.version}</version>
+                <optional>true</optional>
+            </dependency>
+
+            <!-- Nacos -->
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-api</artifactId>
+                <version>${nacos.version}</version>
+                <optional>true</optional>
             </dependency>
 
             <!-- Alibaba End -->

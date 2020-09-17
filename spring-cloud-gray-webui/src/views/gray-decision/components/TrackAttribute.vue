@@ -23,8 +23,8 @@
         <el-form-item label="name" prop="name">
           <el-input v-model="infos.name" />
         </el-form-item>
-        <el-form-item label="values" prop="values">
-          <el-input v-model="infos.values" />
+        <el-form-item label="value" prop="value">
+          <el-input v-model="infos.value" />
         </el-form-item>
       </div>
       <div class="infosBox">
@@ -50,10 +50,10 @@ export default {
   data() {
     return {
       infos: {
-        values: '',
+        value: '',
         name: '',
         compareMode: '',
-        infos: '{"compareMode":"","name":"","values":""}'
+        infos: '{"compareMode":"","name":"","value":""}'
       },
       options: [{
         value: 'GT',
@@ -73,23 +73,11 @@ export default {
       }, {
         value: 'UNEQUAL',
         label: 'UNEQUAL'
-      }, {
-        value: 'CONTAINS_ALL',
-        label: 'CONTAINS_ALL'
-      }, {
-        value: 'CONTAINS_ANY',
-        label: 'CONTAINS_ANY'
-      }, {
-        value: 'NOT_CONTAINS_ANY',
-        label: 'NOT_CONTAINS_ANY'
-      }, {
-        value: 'NOT_CONTAINS_ALL',
-        label: 'NOT_CONTAINS_ALL'
       }],
       rules: {
         compareMode: [{ required: true, message: 'compareMode is required', trigger: 'change' }],
         name: [{ required: true, message: 'header is required', trigger: 'blur' }],
-        values: [{ required: true, message: 'values is required', trigger: 'blur' }]
+        value: [{ required: true, message: 'value is required', trigger: 'blur' }]
       }
     }
   },
@@ -100,8 +88,8 @@ export default {
     compareMode() {
       return this.infos.compareMode
     },
-    values() {
-      return this.infos.values
+    value() {
+      return this.infos.value
     }
   },
   watch: {
@@ -111,7 +99,7 @@ export default {
     compareMode(a) {
       this.setInfos()
     },
-    values(a) {
+    value(a) {
       this.setInfos()
     },
     info(a) {
@@ -133,7 +121,7 @@ export default {
   },
   methods: {
     setInfos() {
-      this.infos.infos = '{"compareMode":"' + this.infos.compareMode + '","name":"' + this.infos.name + '","values":"' + this.infos.values + '"}'
+      this.infos.infos = '{"compareMode":"' + this.infos.compareMode + '","name":"' + this.infos.name + '","value":"' + this.infos.value + '"}'
       this.$emit('sendInfos', this.infos.infos)
     },
     clear() {
