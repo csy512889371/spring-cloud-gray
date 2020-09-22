@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.netflix.ribbon.SpringClientFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 @ConditionalOnProperty(value = "gray.enabled")
@@ -29,6 +30,7 @@ public class GrayClientRibbonNacosAutoConfiguration {
 
 
     @Bean
+    @Primary
     public ServerExplainer<Server> serverExplainer(
             SpringClientFactory springClientFactory, VersionExtractor<Server> versionExtractor) {
         return new NacosServerExplainer(springClientFactory, versionExtractor);

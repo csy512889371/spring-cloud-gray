@@ -4,14 +4,14 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: gray-Server
+    name: gray-server
 
   #通用数据源配置
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/gray_server01?charset=utf8mb4&useSSL=false
+    url: jdbc:mysql://39.100.254.140:3306/gray_server01?charset=utf8mb4&useSSL=false
     username: root
-    password: root
+    password: loit2019ABC
     # Hikari 数据源专用配置
     hikari:
       maximum-pool-size: 20
@@ -30,7 +30,10 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 192.168.10.173:8848
+#        server-addr: 47.114.50.99:8010
+#        namespace: 46c2400a-5773-4c26-be68-2e90a673259b
+        ip: 192.168.10.173
     stream:
       bindings:
         GrayEventOutput:
@@ -56,14 +59,14 @@ eureka:
 
 gray:
   server:
-    cluster:
-      #      synchro:
-      #        enable: false
-      peerNodes:
-        - host: localhost
-          port: 20202
-        - host: localhost
-          port: 20203
+#    cluster:
+#      #      synchro:
+#      #        enable: false
+#      peerNodes:
+#        - host: localhost
+#          port: 20202
+#        - host: localhost
+#          port: 20203
     evictionIntervalTimerInMs: 30000
     instance:
       normalInstanceStatus: STARTING,UP,OUT_OF_SERVICE

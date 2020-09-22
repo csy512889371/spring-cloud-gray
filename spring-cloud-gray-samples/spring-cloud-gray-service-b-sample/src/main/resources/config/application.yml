@@ -10,7 +10,10 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 192.168.10.173:8848
+#        server-addr: 47.114.50.99:8010
+#        namespace: 46c2400a-5773-4c26-be68-2e90a673259b
+        ip: 192.168.10.173
     stream:
       bindings:
         GrayEventInput:
@@ -54,7 +57,7 @@ eureka:
 #    initial-status: starting
 feign:
   hystrix:
-    enabled: true
+    enabled: false
 hystrix:
   threadpool:
     default:
@@ -69,7 +72,7 @@ gray:
   hystrix:
     enabled: true
   server:
-    url: http://gray-Server
+    url: http://gray-server
     loadbalanced: true
     retryable: true
     retryNumberOfRetries: 3

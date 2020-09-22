@@ -10,7 +10,10 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 192.168.10.173:8848
+#        server-addr: 47.114.50.99:8010
+#        namespace: 46c2400a-5773-4c26-be68-2e90a673259b
+        ip: 192.168.10.173
     gateway:
       discovery:
         locator:
@@ -25,16 +28,16 @@ spring:
           filters:
             - StripPrefix=1
             # 限流配置
-            - name: RequestRateLimiter
-              args:
-                key-resolver: '#{@uriKeyResolver}'
-                redis-rate-limiter.replenishRate: 500
-                redis-rate-limiter.burstCapacity: 1000
+#            - name: RequestRateLimiter
+#              args:
+#                key-resolver: '#{@uriKeyResolver}'
+#                redis-rate-limiter.replenishRate: 500
+#                redis-rate-limiter.burstCapacity: 1000
             # 降级配置
-            - name: Hystrix
-              args:
-                name: default
-                fallbackUri: 'forward:/fallback'
+#            - name: Hystrix
+#              args:
+#                name: default
+#                fallbackUri: 'forward:/fallback'
     stream:
       bindings:
         GrayEventInput:
@@ -83,8 +86,10 @@ gray:
   hystrix:
     enabled: true
   server:
-    url: http://localhost:20202
-    loadbalanced: false
+    url: http://gray-server
+#    url: http://192.168.10.173:20202
+    loadbalanced: true
+    retryable: true
   client:
     runenv: web
     serviceUpdateIntervalTimerInMs: 5000
@@ -107,3 +112,5 @@ gray:
         path-patterns: /*
   load:
     enabled: false
+#logging:
+#  cn.springcloud: WARN
