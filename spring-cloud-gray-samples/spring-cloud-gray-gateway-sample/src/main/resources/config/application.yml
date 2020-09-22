@@ -10,7 +10,9 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.10.173:8848
+        server-addr: 47.114.50.99:8010
+        namespace: 46c2400a-5773-4c26-be68-2e90a673259b
+#        server-addr: 192.168.10.173:8848
 #        server-addr: 47.114.50.99:8010
 #        namespace: 46c2400a-5773-4c26-be68-2e90a673259b
         ip: 192.168.10.173
@@ -112,5 +114,9 @@ gray:
         path-patterns: /*
   load:
     enabled: false
-#logging:
-#  cn.springcloud: WARN
+logging:
+  level:
+    cn:
+      springcloud:
+        gray: error
+

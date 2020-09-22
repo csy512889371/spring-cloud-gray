@@ -30,13 +30,14 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <groupId>com.timeloit.cloud</groupId>
+            <artifactId>spring-cloud-starter-timeloit-nacos-discovery</artifactId>
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-dubbo</artifactId>
+            <version>${spring-cloud-alibaba-dependencies.version}</version>
             <optional>true</optional>
         </dependency>
     </dependencies>

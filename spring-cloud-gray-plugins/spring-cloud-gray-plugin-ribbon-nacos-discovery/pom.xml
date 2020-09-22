@@ -19,8 +19,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <groupId>com.timeloit.cloud</groupId>
+            <artifactId>spring-cloud-starter-timeloit-nacos-discovery</artifactId>
         </dependency>
 
         <dependency>

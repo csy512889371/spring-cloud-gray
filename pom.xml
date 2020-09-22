@@ -99,6 +99,8 @@
         <hibernate-validator.version>6.1.5.Final</hibernate-validator.version>
 
         <maven_flatten_version>1.1.0</maven_flatten_version>
+
+        <spring-cloud-timeloit.version>2.3.3-SNAPSHOT</spring-cloud-timeloit.version>
     </properties>
 
 
@@ -305,10 +307,18 @@
 
 
             <!-- Alibaba Start -->
+<!--            <dependency>-->
+<!--                <groupId>com.alibaba.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-alibaba-dependencies</artifactId>-->
+<!--                <version>${spring-cloud-alibaba-dependencies.version}</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
+
             <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring-cloud-alibaba-dependencies.version}</version>
+                <groupId>com.timeloit.cloud</groupId>
+                <artifactId>spring-cloud-timeloit</artifactId>
+                <version>${spring-cloud-timeloit.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

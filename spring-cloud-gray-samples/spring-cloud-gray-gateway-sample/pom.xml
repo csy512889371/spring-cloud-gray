@@ -12,10 +12,7 @@
     <artifactId>spring-cloud-gray-gateway-sample</artifactId>
 
     <dependencies>
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-web</artifactId>-->
-        <!--        </dependency>-->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
@@ -24,13 +21,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.cloud</groupId>-->
-        <!--            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
-        <!--        </dependency>-->
+
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <groupId>com.timeloit.cloud</groupId>
+            <artifactId>spring-cloud-starter-timeloit-nacos-discovery</artifactId>
         </dependency>
 
 
@@ -38,14 +32,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-gateway-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
-        </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.cloud</groupId>-->
-        <!--            <artifactId>spring-cloud-starter-gateway</artifactId>-->
-        <!--        </dependency>-->
+
 
         <dependency>
             <groupId>cn.springcloud.gray</groupId>
@@ -55,10 +42,6 @@
                 <exclusion>
                     <artifactId>spring-cloud-gray-plugin-webmvc</artifactId>
                     <groupId>cn.springcloud.gray</groupId>
-                </exclusion>
-                <exclusion>
-                    <groupId>cn.springcloud.gray</groupId>
-                    <artifactId>spring-cloud-gray-plugin-eureka</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -72,10 +55,7 @@
             <artifactId>spring-cloud-gray-plugin-gateway</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>cn.springcloud.gray</groupId>-->
-        <!--            <artifactId>spring-cloud-gray-plugin-event-stream</artifactId>-->
-        <!--        </dependency>-->
+
 
     </dependencies>
 

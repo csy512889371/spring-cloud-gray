@@ -12,6 +12,7 @@ import cn.springcloud.gray.model.GrayTrackDefinition;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -136,6 +137,15 @@ public class HttpInformationClient implements InformationClient {
             if (e instanceof CommunicationException && Objects.nonNull(e.getCause())) {
                 cause = e.getCause();
             }
+
+            String message = e.getMessage();
+
+            if (StringUtils.isNotEmpty(message) && message.contains("No instances available for")) {
+                log.warn("{}失败:{}", action, e.getMessage(), cause);
+                log.error("{}失败:{}", action, e.getMessage());
+                throw e;
+            }
+
             log.error("{}失败:{}", action, e.getMessage(), cause);
             throw e;
         }
