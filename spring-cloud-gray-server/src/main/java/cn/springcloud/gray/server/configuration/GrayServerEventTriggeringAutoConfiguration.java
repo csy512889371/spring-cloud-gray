@@ -32,11 +32,11 @@ public class GrayServerEventTriggeringAutoConfiguration {
     @Autowired
     private GrayServerEventProperties grayServerEventProperties;
 
-    @Bean
-    @ConditionalOnMissingBean
-    public GrayEventSender grayEventSender() {
-        return new GrayEventSender.Default();
-    }
+//    @Bean
+//    @ConditionalOnMissingBean
+//    public GrayEventSender grayEventSender() {
+//        return new GrayEventSender.Default();
+//    }
 
 
     @Bean
