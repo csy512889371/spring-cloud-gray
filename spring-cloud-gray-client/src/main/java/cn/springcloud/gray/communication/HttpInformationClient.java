@@ -141,7 +141,7 @@ public class HttpInformationClient implements InformationClient {
             String message = e.getMessage();
 
             if (StringUtils.isNotEmpty(message) && message.contains("No instances available for")) {
-                log.warn("{}失败:{}", action, e.getMessage(), cause);
+//                log.warn("{}失败:{}", action, e.getMessage(), cause);
                 log.error("{}失败:{}", action, e.getMessage());
                 throw e;
             }

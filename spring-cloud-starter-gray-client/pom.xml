@@ -24,6 +24,10 @@
             <version>${project.version}</version>
             <exclusions>
                 <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-netflix-hystrix</artifactId>
+                </exclusion>
+                <exclusion>
                     <groupId>io.github.openfeign</groupId>
                     <artifactId>feign-hystrix</artifactId>
                 </exclusion>

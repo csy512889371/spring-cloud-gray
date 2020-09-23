@@ -112,7 +112,7 @@ public class DefaultGrayInfosInitializer implements GrayInfosInitializer {
         try {
             refreshDriver.refresh();
         } catch (Exception e) {
-            log.warn("更新灰度信息失败: DefaultGrayInfosInitializer {}", e.getMessage() ,e);
+//            log.warn("更新灰度信息失败: DefaultGrayInfosInitializer {}", e.getMessage() ,e);
             log.error("更新灰度信息失败: {}", e.getMessage());
             return false;
         }

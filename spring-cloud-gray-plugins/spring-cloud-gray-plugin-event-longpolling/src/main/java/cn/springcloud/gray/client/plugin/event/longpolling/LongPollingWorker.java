@@ -75,8 +75,8 @@ public class LongPollingWorker {
         try {
             ls = listening();
         } catch (Throwable e) {
+//            log.warn("gray server 监听失败{}次:{}", longpollingFailedTimes + 1, e.getMessage(), e);
             log.error("gray server 监听失败{}次:{}", longpollingFailedTimes + 1, e.getMessage());
-            log.warn("gray server 监听失败{}次:{}", longpollingFailedTimes + 1, e.getMessage(), e);
             int longpollingFailedRetryTime = (int) (defaultLongpollingFailedRetryTime * longpollingFailedTimes * 10 * 1.5);
             longpollingFailedRetryTime = Math.max(longpollingFailedRetryTime, defaultLongpollingFailedRetryTime);
             execListening(Math.min(longpollingFailedRetryTime, maxLongpollingFailedRetryTime));
