@@ -1,30 +1,37 @@
-package cn.springcloud.gray.client;
+package cn.springcloud.gray.client.hooks;
 
 import cn.springcloud.gray.GrayClientConfig;
 import cn.springcloud.gray.communication.InformationClient;
+import cn.springcloud.gray.hook.StartShutdownHook;
 import cn.springcloud.gray.local.InstanceLocalInfo;
-import cn.springcloud.gray.local.InstanceLocalInfoAware;
+import cn.springcloud.gray.local.InstanceLocalInfoObtainer;
 import cn.springcloud.gray.model.GrayInstance;
 import cn.springcloud.gray.model.GrayStatus;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.InitializingBean;
 
-
+/**
+ * @author saleson
+ * @date 2020-09-23 23:01
+ */
 @Slf4j
-public class GrayClientEnrollInitializingDestroyBean implements InitializingBean, InstanceLocalInfoAware {
+public class GrayClientEnrollHook implements StartShutdownHook {
 
+    private InstanceLocalInfoObtainer instanceLocalInfoObtainer;
     private InformationClient informationClient;
-    private InstanceLocalInfo instanceLocalInfo;
     private GrayClientConfig clientConfig;
 
-    public GrayClientEnrollInitializingDestroyBean(
-            InformationClient informationClient, GrayClientConfig clientConfig) {
+
+    public GrayClientEnrollHook(
+            InstanceLocalInfoObtainer instanceLocalInfoObtainer,
+            InformationClient informationClient,
+            GrayClientConfig clientConfig) {
+        this.instanceLocalInfoObtainer = instanceLocalInfoObtainer;
         this.informationClient = informationClient;
         this.clientConfig = clientConfig;
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void start() {
         if (clientConfig.isGrayEnroll()) {
             if (clientConfig.grayEnrollDealyTimeInMs() > 0) {
                 Thread t = new Thread(() -> {
@@ -41,7 +48,9 @@ public class GrayClientEnrollInitializingDestroyBean implements InitializingBean
         }
     }
 
+    @Override
     public void shutdown() {
+//        InstanceLocalInfo instanceLocalInfo = instanceLocalInfoObtainer.getInstanceLocalInfo();
 //        if (instanceLocalInfo.isGray()) {
 //            informationClient.serviceDownline(
 //                    instanceLocalInfo.getInstanceId());
@@ -60,6 +69,7 @@ public class GrayClientEnrollInitializingDestroyBean implements InitializingBean
     }
 
     private void grayRegister() {
+        InstanceLocalInfo instanceLocalInfo = instanceLocalInfoObtainer.getInstanceLocalInfo();
         GrayInstance grayInstance = new GrayInstance();
         grayInstance.setHost(instanceLocalInfo.getHost());
         grayInstance.setGrayStatus(GrayStatus.OPEN);
@@ -71,8 +81,4 @@ public class GrayClientEnrollInitializingDestroyBean implements InitializingBean
         instanceLocalInfo.setGray(true);
     }
 
-    @Override
-    public void setInstanceLocalInfo(InstanceLocalInfo instanceLocalInfo) {
-        this.instanceLocalInfo = instanceLocalInfo;
-    }
 }
