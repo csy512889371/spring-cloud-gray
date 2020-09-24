@@ -76,4 +76,4 @@ logging:
   level:
     cn:
       springcloud:
-        gray: error
+        gray: warn

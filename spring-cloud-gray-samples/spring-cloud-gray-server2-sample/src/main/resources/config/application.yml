@@ -1,5 +1,5 @@
 server:
-  port: 20203
+  port: 8059
 spring:
   main:
     allow-bean-definition-overriding: true
@@ -66,9 +66,9 @@ gray:
       #        enable: false
       peerNodes:
         - host: localhost
-          port: 20202
+          port: 8058
         - host: localhost
-          port: 20203
+          port: 8059
     evictionIntervalTimerInMs: 30000
     instance:
       normalInstanceStatus: STARTING,UP,OUT_OF_SERVICE

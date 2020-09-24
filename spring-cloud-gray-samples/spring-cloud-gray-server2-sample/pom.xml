@@ -57,6 +57,13 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>cn.springcloud.gray.server.app2.GrayServer2Application</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

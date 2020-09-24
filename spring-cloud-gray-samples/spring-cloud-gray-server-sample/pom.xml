@@ -45,7 +45,6 @@
         </dependency>
 
 
-
     </dependencies>
 
     <build>
@@ -55,6 +54,13 @@
                 <artifactId>maven-deploy-plugin</artifactId>
                 <configuration>
                     <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>cn.springcloud.gray.server.app.GrayServerApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
