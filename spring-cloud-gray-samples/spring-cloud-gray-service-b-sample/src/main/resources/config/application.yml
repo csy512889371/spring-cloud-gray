@@ -14,7 +14,7 @@ spring:
         namespace: 77fb94a8-3c81-49d5-acbf-e59e2b21d3b6
 #        server-addr: 47.114.50.99:8010
 #        namespace: 77fb94a8-3c81-49d5-acbf-e59e2b21d3b6
-        ip: 192.168.10.173
+#        ip: 192.168.10.173
     stream:
       bindings:
         GrayEventInput:
