@@ -31,10 +31,10 @@ spring:
     nacos:
       discovery:
         server-addr: 47.114.50.99:8010
-        namespace: 46c2400a-5773-4c26-be68-2e90a673259b
+        namespace: 77fb94a8-3c81-49d5-acbf-e59e2b21d3b6
         #        server-addr: 192.168.10.173:8848
         #        server-addr: 47.114.50.99:8010
-        #        namespace: 46c2400a-5773-4c26-be68-2e90a673259b
+        #        namespace: 77fb94a8-3c81-49d5-acbf-e59e2b21d3b6
         ip: 192.168.10.173
     stream:
       bindings:
