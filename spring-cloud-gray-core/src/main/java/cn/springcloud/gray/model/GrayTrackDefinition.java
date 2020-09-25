@@ -13,7 +13,6 @@ public class GrayTrackDefinition implements Serializable {
 
     private static final long serialVersionUID = -968308788323949943L;
 
-    private static final long serialVersionUID = -968308788323949943L;
     private String name;
 
     private String value;
