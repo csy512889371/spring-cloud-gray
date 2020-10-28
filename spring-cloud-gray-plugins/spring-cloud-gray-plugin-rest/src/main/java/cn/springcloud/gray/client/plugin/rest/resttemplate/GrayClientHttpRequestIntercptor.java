@@ -1,8 +1,8 @@
-package cn.springcloud.gray.client.netflix.resttemplate;
+package cn.springcloud.gray.client.plugin.rest.resttemplate;
 
 import cn.springcloud.gray.client.config.properties.GrayRequestProperties;
-import cn.springcloud.gray.client.netflix.constants.GrayNetflixClientConstants;
 import cn.springcloud.gray.commons.GrayRequestHelper;
+import cn.springcloud.gray.constants.RequestInterceptorConstants;
 import cn.springcloud.gray.request.GrayHttpRequest;
 import cn.springcloud.gray.response.http.HttpResponseMessage;
 import cn.springcloud.gray.routing.connectionpoint.RoutingConnectPointContext;
@@ -56,7 +56,7 @@ public class GrayClientHttpRequestIntercptor implements ClientHttpRequestInterce
 
         grayRequest.setAttachment(GRAY_REQUEST_ATTRIBUTE_RESTTEMPLATE_REQUEST, request);
         RoutingConnectPointContext connectPointContext = RoutingConnectPointContext.builder()
-                .interceptroType(GrayNetflixClientConstants.INTERCEPTRO_TYPE_RESTTEMPLATE)
+                .interceptroType(RequestInterceptorConstants.INTERCEPTRO_TYPE_RESTTEMPLATE)
                 .grayRequest(grayRequest).build();
 
         GrayRequestHelper.setPreviousServerInfoToHttpHeaderByInstanceLocalInfo(grayRequest);

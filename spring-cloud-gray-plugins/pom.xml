@@ -11,11 +11,12 @@
 
     <artifactId>spring-cloud-gray-plugins</artifactId>
     <packaging>pom</packaging>
+    <name>spring-cloud-gray-plugins</name>
     <modules>
         <module>spring-cloud-gray-plugin-event-stream</module>
         <module>spring-cloud-gray-plugin-eureka</module>
         <module>spring-cloud-gray-plugin-zuul</module>
-        <module>spring-cloud-gray-plugin-feign</module>
+        <module>spring-cloud-gray-plugin-openfeign</module>
         <module>spring-cloud-gray-plugin-gateway</module>
         <module>spring-cloud-gray-plugin-webmvc</module>
         <module>spring-cloud-gray-plugin-webflux</module>
@@ -24,6 +25,7 @@
         <module>spring-cloud-gray-plugin-refresher</module>
         <module>spring-cloud-gray-plugin-event-longpolling</module>
         <module>spring-cloud-gray-plugin-dubbo</module>
+        <module>spring-cloud-gray-plugin-rest</module>
     </modules>
 
 </project>
