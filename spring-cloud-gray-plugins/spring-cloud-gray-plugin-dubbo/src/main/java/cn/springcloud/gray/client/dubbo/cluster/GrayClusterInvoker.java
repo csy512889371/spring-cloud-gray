@@ -9,16 +9,20 @@ import cn.springcloud.gray.commons.GrayRequestHelper;
 import cn.springcloud.gray.request.GrayRequest;
 import cn.springcloud.gray.routing.connectionpoint.RoutingConnectPointContext;
 import cn.springcloud.gray.routing.connectionpoint.RoutingConnectionPoint;
+import cn.springcloud.gray.utils.ClassUtils;
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.rpc.*;
 import org.apache.dubbo.rpc.cluster.ClusterInvoker;
 import org.apache.dubbo.rpc.cluster.Directory;
+import org.apache.dubbo.rpc.model.ApplicationModel;
+import org.apache.dubbo.rpc.model.ConsumerMethodModel;
+import org.apache.dubbo.rpc.model.MethodDescriptor;
+import org.apache.dubbo.rpc.model.ServiceRepository;
 import org.apache.dubbo.rpc.service.GenericService;
 
+import java.lang.reflect.Method;
 import java.net.URI;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author saleson
@@ -57,7 +61,7 @@ public class GrayClusterInvoker<T> implements ClusterInvoker<T> {
     @Override
     public Result invoke(Invocation invocation) throws RpcException {
         RoutingConnectionPoint routingConnectionPoint = GrayClientHolder.getRoutingConnectionPoint();
-        if (ignoreGrayscale(invocation) || Objects.isNull(routingConnectionPoint)) {
+        if (ignoreGrayScale(invocation) || Objects.isNull(routingConnectionPoint)) {
             return this.invoker.invoke(invocation);
         }
 
@@ -96,23 +100,24 @@ public class GrayClusterInvoker<T> implements ClusterInvoker<T> {
 
         String serviceName = invocation.getServiceName();
         String methodName = invocation.getMethodName();
-        grayRequest.setAttribute("serviceName", serviceName);
-        grayRequest.setAttribute("methodName", methodName);
+        grayRequest.setAttribute(GrayDubboConstants.DUBBO_INVOCATION_KEY_SERVICE_NAME, serviceName);
+        grayRequest.setAttribute(GrayDubboConstants.DUBBO_INVOCATION_KEY_METHOD_NAME, methodName);
+        grayRequest.setAttachment(GrayDubboConstants.DUBBO_INVOCATION_KEY_ARGUMENTS, invocation.getArguments());
+        grayRequest.setAttachment(GrayDubboConstants.DUBBO_INVOCATION__KEY_METHOD_ARGUMENTS, getMethodArguments(invocation));
 
-        grayRequest.setAttachment("arguments", invocation.getArguments());
-        grayRequest.setAttachment("parameterTypes", invocation.getParameterTypes());
+        grayRequest.setAttachment(GrayDubboConstants.DUBBO_INVOCATION__KEY_PARAMETER_TYPES, invocation.getParameterTypes());
         if (invocation instanceof RpcInvocation) {
             RpcInvocation rpcInvocation = (RpcInvocation) invocation;
-            grayRequest.setAttachment("returnType", rpcInvocation.getReturnType());
-            grayRequest.setAttribute("parameterTypesDesc", rpcInvocation.getParameterTypesDesc());
+            grayRequest.setAttachment(GrayDubboConstants.DUBBO_INVOCATION__KEY_RETURN_TYPE, rpcInvocation.getReturnType());
+            grayRequest.setAttribute(GrayDubboConstants.DUBBO_INVOCATION__KEY_PARAMETER_TYPES_DESC, rpcInvocation.getParameterTypesDesc());
         }
 
-        grayRequest.setUri(URI.create(serviceName + "#" + methodName));
+        grayRequest.setUri(URI.create(serviceName + GrayDubboConstants.DUBBO_INVOCATION__KEY_SERVICE_METHOD_SPLIT_JOINT + methodName));
         GrayRequestHelper.setPreviousServerInfoByInstanceLocalInfo(grayRequest);
         return grayRequest;
     }
 
-    protected boolean ignoreGrayscale(Invocation invocation) {
+    protected boolean ignoreGrayScale(Invocation invocation) {
         String serviceName = invocation.getServiceName();
         if (ignoreGrayServiceNames.contains(serviceName)) {
             return true;
@@ -132,6 +137,45 @@ public class GrayClusterInvoker<T> implements ClusterInvoker<T> {
         ignoreGrayServiceNames.add(GenericService.class.getName());
     }
 
+    private Map<String, Object> getMethodArguments(Invocation invocation) {
+        Object[] arguments = invocation.getArguments();
+        Map<String, Object> methodArgs = new HashMap<>(arguments.length);
+        Method method = getInvocationMethod(invocation);
+        if (Objects.isNull(method)) {
+            return methodArgs;
+        }
+        String[] argNames = ClassUtils.getParameterNames(method);
+        if (!Objects.equals(argNames.length, arguments.length)) {
+            return methodArgs;
+        }
+        for (int i = 0; i < argNames.length; i++) {
+            methodArgs.put(argNames[i], arguments[i]);
+        }
+        return methodArgs;
+    }
+
+    private Method getInvocationMethod(Invocation invocation) {
+        Method method = getMethodByConsumerMethodModel(invocation);
+        return Objects.nonNull(method) ? method : getMethodByMethodDescriptor(invocation);
+    }
+
+
+    private Method getMethodByConsumerMethodModel(Invocation invocation) {
+        ConsumerMethodModel consumerMethodModel = (ConsumerMethodModel) invocation.getAttributes().get("methodModel");
+        if (Objects.isNull(consumerMethodModel)) {
+            return null;
+        }
+        return consumerMethodModel.getMethod();
+    }
+
+    private Method getMethodByMethodDescriptor(Invocation invocation) {
+        ServiceRepository repository = ApplicationModel.getServiceRepository();
+        MethodDescriptor methodDescriptor = repository.lookupMethod(invocation.getServiceName(), invocation.getMethodName());
+        if (Objects.isNull(methodDescriptor)) {
+            return null;
+        }
+        return methodDescriptor.getMethod();
+    }
 
     public Set<String> getIgnoreGrayServiceNames() {
         return ignoreGrayServiceNames;

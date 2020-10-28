@@ -1,4 +1,4 @@
-package cn.springcloud.gray.client.netflix.resttemplate;
+package cn.springcloud.gray.client.plugin.rest.resttemplate;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

@@ -1,10 +1,10 @@
-package cn.springcloud.gray.client.netflix.resttemplate.configuration;
+package cn.springcloud.gray.client.plugin.rest.resttemplate.configuration;
 
 import cn.springcloud.gray.GrayManager;
 import cn.springcloud.gray.client.config.properties.GrayRequestProperties;
+import cn.springcloud.gray.client.plugin.rest.resttemplate.GrayClientHttpRequestIntercptor;
+import cn.springcloud.gray.client.plugin.rest.resttemplate.RestTemplateRequestInterceptor;
 import cn.springcloud.gray.routing.connectionpoint.RoutingConnectionPoint;
-import cn.springcloud.gray.client.netflix.resttemplate.GrayClientHttpRequestIntercptor;
-import cn.springcloud.gray.client.netflix.resttemplate.RestTemplateRequestInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
