@@ -1,3 +1,6 @@
+server:
+  port: 20401
+
 spring:
   main:
     allow-bean-definition-overriding: true
@@ -10,11 +13,11 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 47.114.50.99:8010
-        namespace: 77fb94a8-3c81-49d5-acbf-e59e2b21d3b6
+        server-addr: 39.100.254.140:8103
+        namespace: 2f2993d8-2bb9-4644-ad3b-fcfd63251452
 #        server-addr: 192.168.10.173:8848
-#        server-addr: 47.114.50.99:8010
-#        namespace: 77fb94a8-3c81-49d5-acbf-e59e2b21d3b6
+#        server-addr: 39.100.254.140:8103
+#        namespace: 2f2993d8-2bb9-4644-ad3b-fcfd63251452
 #        ip: 192.168.10.173
     gateway:
       discovery:
@@ -27,6 +30,20 @@ spring:
           uri: lb://service-a
           predicates:
             - Path=/ser-a/**
+          filters:
+            - StripPrefix=1
+
+        - id: loit-sample-a
+          uri: lb://loit-sample-a
+          predicates:
+            - Path=/api-sample-a/**
+          filters:
+            - StripPrefix=1
+
+        - id: loit-sample-b
+          uri: lb://loit-sample-b
+          predicates:
+            - Path=/api-sample-b/**
           filters:
             - StripPrefix=1
             # 限流配置
@@ -59,8 +76,7 @@ spring:
               #              requeueRejected: true #spring cloud stream 如果出现异常， 是否需要重新投递消息， false表示丢弃。  也有相应的Exception， true-MessageRejectedWhileStoppingException false-AmqpRejectAndDontRequeueException
               #              auto-bind-dlq: true
               acknowledgeMode: AUTO
-server:
-  port: 20401
+
 eureka:
   client:
     serviceUrl:

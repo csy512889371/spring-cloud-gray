@@ -31,11 +31,11 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 47.114.50.99:8010
-        namespace: 77fb94a8-3c81-49d5-acbf-e59e2b21d3b6
+        server-addr: 39.100.254.140:8103
+        namespace: 2f2993d8-2bb9-4644-ad3b-fcfd63251452
         #        server-addr: 192.168.10.173:8848
-        #        server-addr: 47.114.50.99:8010
-        #        namespace: 77fb94a8-3c81-49d5-acbf-e59e2b21d3b6
+        #        server-addr: 39.100.254.140:8103
+        #        namespace: 2f2993d8-2bb9-4644-ad3b-fcfd63251452
 #        ip: 192.168.10.173
     stream:
       bindings:
