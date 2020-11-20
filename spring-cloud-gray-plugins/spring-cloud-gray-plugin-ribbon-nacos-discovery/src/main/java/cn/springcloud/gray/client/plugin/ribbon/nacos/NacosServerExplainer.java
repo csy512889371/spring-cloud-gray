@@ -30,6 +30,7 @@ public class NacosServerExplainer implements ServerExplainer<Server> {
                 .instanceId(getInstaceId(server))
                 .serviceId(seviceId)
                 .metadata(metadata)
+                .version(getVersion(server, metadata))
                 .build();
     }
 

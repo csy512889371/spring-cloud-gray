@@ -6,6 +6,8 @@ spring:
       discovery:
         server-addr: 39.100.254.140:8103
         namespace: 2f2993d8-2bb9-4644-ad3b-fcfd63251452
+        metadata:
+          version: 2.0.0
 #        server-addr: 39.100.254.140:8103
 #        namespace: 2f2993d8-2bb9-4644-ad3b-fcfd63251452
 #        ip: 192.168.10.173
@@ -54,6 +56,8 @@ gray:
     instance:
       grayEnroll: false
       grayEnrollDealyTimeInMs: 20000
+      metadata:
+        version-field: version
   holdoutServer:
     enabled: false
     services:
